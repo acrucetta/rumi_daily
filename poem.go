@@ -1,17 +1,23 @@
 package main
 
 import (
+	"encoding/csv"
+	"fmt"
 	"math/rand"
+	"os"
 )
 
-var poems = []string{
-    "Poem 1",
-    "Poem 2",
-    "Poem 3",
-    // Add more Rumi poems here
-}
 
 func getRandomPoem() string {
-    index := rand.Intn(len(poems))
-    return poems[index]
+	// Load the poems csv
+	file, err := os.Open("poems.csv")
+	if err != nil {
+		fmt.Println("Error:", err)
+	}
+	defer file.Close()
+	reader := csv.NewReader(file)
+	records, err := reader.ReadAll()
+	total_poems := len(records) - 1           // Subtracting the header
+	random_poem := rand.Intn(total_poems) + 1 // Add 1 to avoid header
+	return records[random_poem][1]
 }

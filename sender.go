@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/smtp"
 	"os"
+	"strings"
 
 	"github.com/joho/godotenv"
 )
@@ -42,15 +43,15 @@ func sendEmail(poem string) {
 		fmt.Printf("Failed loading .env")
 	}
 	pass := os.Getenv("APP_PASSWORD")
-	fmt.Println(pass)
 	auth := LoginAuth("acrucettanieto", pass)
 
-	// Here we do it all: connect to our server, set up a message and send it
+	// Replace the escaped newline character with a real newline
+	poem = strings.Replace(poem, "\\n", "\n", -1)
+
 	to := []string{"andres.crucetta@hey.com"}
 	msg := []byte("To: andres.crucetta@hey.com\r\n" +
 		"Subject: Daily Poem\r\n" +
-		"\r\n" +
-		"Wonderful solution\r\n")
+		"\r\n" + poem)
 	err = smtp.SendMail("smtp.gmail.com:587", auth, "acrucettanieto@gmail.com", to, msg)
 	if err != nil {
 		log.Fatal(err)
