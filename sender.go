@@ -45,12 +45,9 @@ func sendEmail(poem string) {
 	pass := os.Getenv("APP_PASSWORD")
 	auth := LoginAuth("acrucettanieto", pass)
 
-	// Replace the escaped newline character with a real newline
-	poem = strings.Replace(poem, "\\n", "\n", -1)
-
 	to := []string{"andres.crucetta@hey.com"}
 	msg := []byte("To: andres.crucetta@hey.com\r\n" +
-		"Subject: Daily Poem\r\n" +
+		"Subject: Daily poem\r\n" +
 		"\r\n" + poem)
 	err = smtp.SendMail("smtp.gmail.com:587", auth, "acrucettanieto@gmail.com", to, msg)
 	if err != nil {
