@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"math/rand"
 	"os"
+	"strings"
 )
-
 
 func getRandomPoem() string {
 	// Load the poems csv
@@ -17,9 +17,9 @@ func getRandomPoem() string {
 	defer file.Close()
 	reader := csv.NewReader(file)
 	records, err := reader.ReadAll()
-	total_poems := len(records) - 1           // Subtracting the header
+	total_poems := len(records) - 1          // Subtracting the header
 	random_idx := rand.Intn(total_poems) + 1 // Add 1 to avoid header
 	poem := records[random_idx][1]
 	poem = strings.Replace(poem, "\n", "\r\n", -1)
-return poem
+	return poem
 }
