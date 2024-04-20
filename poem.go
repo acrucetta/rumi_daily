@@ -2,7 +2,6 @@ package main
 
 import (
 	"math/rand"
-	"time"
 )
 
 var poems = []string{
@@ -13,7 +12,6 @@ var poems = []string{
 }
 
 func getRandomPoem() string {
-    rand.Seed(time.Now().UnixNano())
     index := rand.Intn(len(poems))
     return poems[index]
 }
