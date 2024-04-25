@@ -10,6 +10,11 @@ import (
 
 func getRandomPoem() string {
 	// Load the poems csv
+	filePath := os.Getenv("POEMS_FILE_PATH")
+	if filePath = "" {
+		fmt.Println("Error: POEMS_FILE_PATH not set")
+		return ""
+	}
 	file, err := os.Open("poems.csv")
 	if err != nil {
 		fmt.Println("Error:", err)
